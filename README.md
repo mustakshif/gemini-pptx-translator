@@ -1,280 +1,284 @@
 # PPTX Translate with Gemini API (Fixed Version)
 
-基于Google Gemini API的PowerPoint演示文稿翻译工具，支持多种Gemini模型选择，具备改进的文本提取算法和智能进度跟踪。
+**Language:** [English](README.md) | [中文](README_zh.md)
 
-## 功能特点
+PowerPoint presentation translator using Google Gemini API with improved text extraction algorithms and intelligent progress tracking.
 
-- 使用Google Gemini API进行高质量翻译
-- **改进的文本提取算法** - 按段落完整提取文本，避免格式破坏
-- **智能进度跟踪系统** - 实时显示翻译进度、ETA时间估算和进度条
-- 支持多种最新Gemini模型选择（包括Gemini 2.5系列）
-- 提取PowerPoint中的文本内容（包括标题、正文、表格单元格）
-- **异步批量翻译** - 高效处理大量文本内容
-- **智能缓存机制** - 避免重复API调用，支持断点续传
-- **增强的错误处理** - 超时控制、配额检测、自动重试
-- **格式保持算法** - 保持原始文本格式和样式
-- 详细的日志记录和多种输出模式
-- 命令行界面，支持单文件或批量处理
+> **Reference:** This project is inspired by and references [@thiagoperes/pptx-translate](https://github.com/thiagoperes/pptx-translate)
 
-## 核心算法改进
+## Features
 
-### 1. 文本提取算法优化
-- **段落级提取**：按完整段落提取文本，而不是按文本片段分割
-- **表格处理增强**：完整提取表格单元格内容，保持数据完整性
-- **格式保持**：在翻译过程中保留原始格式和样式
+- High-quality translation using Google Gemini API
+- **Improved text extraction algorithm** - Extract complete paragraphs to avoid format corruption
+- **Intelligent progress tracking system** - Real-time progress display, ETA calculation, and progress bars
+- Support for latest Gemini models (including Gemini 2.5 series)
+- Extract text content from PowerPoint (titles, body text, table cells)
+- **Asynchronous batch translation** - Efficiently process large amounts of text content
+- **Smart caching mechanism** - Avoid duplicate API calls, support resume capability
+- **Enhanced error handling** - Timeout controls, quota detection, automatic retry
+- **Format preservation algorithm** - Maintain original text formatting and styles
+- Detailed logging and multiple output modes
+- Command-line interface supporting single file or batch processing
 
-### 2. 智能进度跟踪
-- **实时进度条**：显示可视化进度条和百分比
-- **ETA计算**：基于当前速度估算剩余时间
-- **内存优化**：高效处理大文件的进度显示
+## Core Algorithm Improvements
 
-### 3. 异步翻译引擎
-- **批量处理**：同时处理多个文本元素
-- **超时控制**：30秒API调用超时，防止卡死
-- **错误恢复**：API失败时保留原始文本，继续处理
+### 1. Text Extraction Algorithm Optimization
+- **Paragraph-level extraction**: Extract complete paragraphs instead of splitting by text fragments
+- **Enhanced table processing**: Complete extraction of table cell content, maintaining data integrity
+- **Format preservation**: Retain original formatting and styles during translation
 
-## 支持的Gemini模型
+### 2. Intelligent Progress Tracking
+- **Real-time progress bar**: Display visual progress bar and percentage
+- **ETA calculation**: Estimate remaining time based on current speed
+- **Memory optimization**: Efficiently handle progress display for large files
 
-### 最新版本 (Gemini 2.5) 🆕
-- `gemini-2.5-flash`: 最新Gemini 2.5 Flash模型（最快最高效，**默认推荐**）
-- `gemini-2.5-pro`: 最新Gemini 2.5 Pro模型（最强大，适合复杂翻译任务）
+### 3. Asynchronous Translation Engine
+- **Batch processing**: Process multiple text elements simultaneously
+- **Timeout control**: 30-second API call timeout to prevent hanging
+- **Error recovery**: Retain original text when API fails, continue processing
 
-### 实验版本 (Gemini 2.0)
-- `gemini-2.0-flash-exp`: 实验版Flash模型
-- `gemini-2.0-flash`: 稳定版Flash模型  
-- `gemini-2.0-pro`: Pro模型
+## Supported Gemini Models
 
-### 历史版本 (Gemini 1.5)
-- `gemini-1.5-flash`: 历史Flash模型
-- `gemini-1.5-pro`: 历史Pro模型
-- `gemini-1.5-flash-exp`: 历史实验版Flash
-- `gemini-1.5-pro-exp`: 历史实验版Pro
+### Latest Version (Gemini 2.5) 🆕
+- `gemini-2.5-flash`: Latest Gemini 2.5 Flash model (fastest and most efficient, **default recommended**)
+- `gemini-2.5-pro`: Latest Gemini 2.5 Pro model (most powerful, suitable for complex translation tasks)
 
-## 安装
+### Experimental Version (Gemini 2.0)
+- `gemini-2.0-flash-exp`: Experimental Flash model
+- `gemini-2.0-flash`: Stable Flash model  
+- `gemini-2.0-pro`: Pro model
 
-1. 克隆或下载项目文件
-2. 安装依赖包：
+### Legacy Version (Gemini 1.5)
+- `gemini-1.5-flash`: Legacy Flash model
+- `gemini-1.5-pro`: Legacy Pro model
+- `gemini-1.5-flash-exp`: Legacy experimental Flash
+- `gemini-1.5-pro-exp`: Legacy experimental Pro
+
+## Installation
+
+1. Clone or download project files
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## 获取Gemini API密钥
+## Getting Gemini API Key
 
-1. 访问 [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 创建新的API密钥
-3. 将API密钥设置为环境变量：
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a new API key
+3. Set API key as environment variable:
 
 ```bash
 export GEMINI_API_KEY="YOUR GEMINI API KEY HERE"
 ```
 
-## 使用方法
+## Usage
 
-### 基本用法
+### Basic Usage
 
-翻译单个文件（使用默认的gemini-2.5-flash模型）：
+Translate a single file (using default gemini-2.5-flash model):
 ```bash
 python translator.py presentation.pptx -l en
 ```
 
-指定输出文件：
+Specify output file:
 ```bash
 python translator.py presentation.pptx -l zh-CN -o translated.pptx
 ```
 
-使用Pro模型进行高质量翻译：
+Use Pro model for high-quality translation:
 ```bash
 python translator.py presentation.pptx -l es -m gemini-2.5-pro
 ```
 
-### 批量处理
+### Batch Processing
 
-翻译当前目录下所有PPT文件：
+Translate all PPT files in current directory:
 ```bash
 python translator.py -l fr
 ```
 
-### 查看可用模型
+### View Available Models
 
 ```bash
 python translator.py --list-models
 ```
 
-### 验证模型可用性
+### Verify Model Availability
 
 ```bash
-# 完整验证（可能较慢）
+# Full verification (may be slow)
 python verify_models.py
 
-# 快速验证（推荐）
+# Quick verification (recommended)
 python quick_test.py
 
-# 基本诊断
+# Basic diagnostics
 python diagnose.py
 ```
 
-### 命令行参数详解
+### Command Line Arguments
 
-- `input_file`: 输入的PowerPoint文件（.pptx）
-- `-l, --language`: 目标语言代码（必需）
-- `-o, --output`: 输出文件路径
-- `-k, --api_key`: Gemini API密钥（或设置GEMINI_API_KEY环境变量）
-- `-m, --model`: 使用的Gemini模型（默认：gemini-2.5-flash）
-- `--list-models`: 列出可用模型并退出
-- `--profile`: 启用性能分析和处理时间统计
-- `--verbose`: 显示详细翻译进度（逐条文本显示）
-- `--quiet`: 最小化输出（仅显示错误和最终结果）
+- `input_file`: Input PowerPoint file (.pptx)
+- `-l, --language`: Target language code (required)
+- `-o, --output`: Output file path
+- `-k, --api_key`: Gemini API key (or set GEMINI_API_KEY environment variable)
+- `-m, --model`: Gemini model to use (default: gemini-2.5-flash)
+- `--list-models`: List available models and exit
+- `--profile`: Enable performance profiling and processing time statistics
+- `--verbose`: Show detailed translation progress (display each text item)
+- `--quiet`: Minimize output (only show errors and final results)
 
-### 支持的语言代码
+### Supported Language Codes
 
-- `en`: 英语
-- `zh-CN`: 简体中文
-- `zh-TW`: 繁体中文
-- `es`: 西班牙语
-- `fr`: 法语
-- `de`: 德语
-- `ja`: 日语
-- `ko`: 韩语
-- `ar`: 阿拉伯语
-- `ru`: 俄语
-- `pt`: 葡萄牙语
-- `it`: 意大利语
-- `nl`: 荷兰语
-- `sv`: 瑞典语
-- 等等...
+- `en`: English
+- `zh-CN`: Simplified Chinese
+- `zh-TW`: Traditional Chinese
+- `es`: Spanish
+- `fr`: French
+- `de`: German
+- `ja`: Japanese
+- `ko`: Korean
+- `ar`: Arabic
+- `ru`: Russian
+- `pt`: Portuguese
+- `it`: Italian
+- `nl`: Dutch
+- `sv`: Swedish
+- And more...
 
-## 使用示例
+## Usage Examples
 
-### 中文翻译为英文（显示进度条）
+### Chinese to English (with progress bar)
 ```bash
 python translator.py 外交思想和务实行动.pptx -l en
-# 输出: Translating to en: ████████████████████████████████████████████████████ 100.0% (45/45) Completed in 23.4s
+# Output: Translating to en: ████████████████████████████████████████████████████ 100.0% (45/45) Completed in 23.4s
 ```
 
-### 英文翻译为中文（详细模式）
+### English to Chinese (verbose mode)
 ```bash
-python translator.py presentation.pptx -l zh-CN -o 翻译后的演示文稿.pptx --verbose
+python translator.py presentation.pptx -l zh-CN -o translated_presentation.pptx --verbose
 ```
 
-### 使用最新Pro模型进行高质量翻译
+### Use latest Pro model for high-quality translation
 ```bash
 python translator.py presentation.pptx -l es -m gemini-2.5-pro
 ```
 
-### 性能分析模式
+### Performance profiling mode
 ```bash
 python translator.py presentation.pptx -l en --profile
-# 显示详细的处理时间统计
+# Shows detailed processing time statistics
 ```
 
-### 静默模式（仅显示结果）
+### Quiet mode (only show results)
 ```bash
 python translator.py presentation.pptx -l en --quiet
 ```
 
-## 智能缓存系统
+## Smart Caching System
 
-脚本会自动创建翻译缓存文件，实现以下功能：
-- **避免重复翻译**：相同文本不会重复调用API
-- **断点续传**：翻译中断后可以继续之前的进度
-- **文件特定缓存**：每个文件和语言组合有独立的缓存
+The script automatically creates translation cache files with the following features:
+- **Avoid duplicate translations**: Same text won't call API repeatedly
+- **Resume capability**: Continue previous progress after interruption
+- **File-specific caching**: Each file and language combination has independent cache
 
-缓存文件格式：
+Cache file format:
 ```
-translation_cache_{文件名}_{语言}_{哈希值}.json
+translation_cache_{filename}_{language}_{hash}.json
 ```
 
-## 日志系统
+## Logging System
 
-翻译过程会记录到：
-- **控制台输出**：实时进度和状态信息
-- **日志文件**：`translation_log.txt` - 详细的操作记录
-- **进度跟踪**：可视化进度条和ETA时间估算
+Translation process is recorded to:
+- **Console output**: Real-time progress and status information
+- **Log file**: `translation_log.txt` - Detailed operation records
+- **Progress tracking**: Visual progress bars and ETA time estimation
 
-## 性能特点
+## Performance Features
 
-### 处理速度
-- **异步处理**：并发处理多个文本元素
-- **智能缓存**：避免重复API调用
-- **批量优化**：减少API请求次数
+### Processing Speed
+- **Asynchronous processing**: Concurrent processing of multiple text elements
+- **Smart caching**: Avoid duplicate API calls
+- **Batch optimization**: Reduce number of API requests
 
-### 错误处理
-- **30秒超时控制**：防止API调用卡死
-- **配额检测**：自动识别API配额问题
-- **优雅降级**：API失败时保留原始文本
+### Error Handling
+- **30-second timeout control**: Prevent API calls from hanging
+- **Quota detection**: Automatically identify API quota issues
+- **Graceful degradation**: Retain original text when API fails
 
-### 内存优化
-- **流式处理**：逐步处理大文件
-- **缓存管理**：自动保存和加载翻译缓存
+### Memory Optimization
+- **Streaming processing**: Process large files progressively
+- **Cache management**: Automatically save and load translation cache
 
-## 注意事项
+## Notes
 
-1. **API配额管理**：确保有足够的Gemini API配额
-2. **文件大小**：大文件翻译可能需要较长时间，建议使用进度条模式
-3. **备份建议**：建议在翻译前备份原始文件
-4. **格式兼容**：某些特殊PowerPoint格式可能无法完全保留
-5. **网络稳定性**：确保网络连接稳定，避免API超时
+1. **API quota management**: Ensure sufficient Gemini API quota
+2. **File size**: Large file translation may take considerable time, recommend using progress bar mode
+3. **Backup recommendation**: Recommend backing up original files before translation
+4. **Format compatibility**: Some special PowerPoint formats may not be fully preserved
+5. **Network stability**: Ensure stable network connection to avoid API timeouts
 
-## 故障排除
+## Troubleshooting
 
-### 常见问题
+### Common Issues
 
-1. **API密钥错误**
-   - 检查GEMINI_API_KEY环境变量是否正确设置
-   - 或使用 `-k` 参数直接提供API密钥
-   - 运行 `python diagnose.py` 进行基本诊断
+1. **API key error**
+   - Check if GEMINI_API_KEY environment variable is correctly set
+   - Or use `-k` parameter to provide API key directly
+   - Run `python diagnose.py` for basic diagnostics
 
-2. **模型不可用**
-   - 使用 `--list-models` 查看可用模型
-   - 运行 `python quick_test.py` 快速验证
-   - 推荐使用默认的 `gemini-2.5-flash` 模型
+2. **Model unavailable**
+   - Use `--list-models` to view available models
+   - Run `python quick_test.py` for quick verification
+   - Recommend using default `gemini-2.5-flash` model
 
-3. **翻译进度卡住**
-   - 脚本已加入30秒超时控制
-   - 检查网络连接稳定性
-   - 尝试使用 `--verbose` 模式查看详细进度
+3. **Translation progress stuck**
+   - Script has added 30-second timeout control
+   - Check network connection stability
+   - Try using `--verbose` mode to view detailed progress
 
-4. **文件读取错误**
-   - 确保文件路径正确且文件未被占用
-   - 检查文件是否为有效的PowerPoint格式（.pptx）
-   - 确认文件权限允许读取
+4. **File reading error**
+   - Ensure file path is correct and file is not occupied
+   - Check if file is valid PowerPoint format (.pptx)
+   - Confirm file permissions allow reading
 
-5. **翻译质量问题**
-   - 尝试使用 `gemini-2.5-pro` 模型获得更好的翻译质量
-   - 检查原始文本是否清晰完整
-   - 使用 `--verbose` 模式检查具体翻译内容
+5. **Translation quality issues**
+   - Try using `gemini-2.5-pro` model for better translation quality
+   - Check if original text is clear and complete
+   - Use `--verbose` mode to check specific translation content
 
-6. **API超时或配额问题**
-   - 检查Gemini API配额使用情况
-   - 脚本已添加智能重试机制
-   - 大文件可考虑分批处理或使用缓存续传
+6. **API timeout or quota issues**
+   - Check Gemini API quota usage
+   - Script has added intelligent retry mechanism
+   - Large files can consider batch processing or using cache resume
 
-### 性能优化建议
+### Performance Optimization Suggestions
 
-1. **选择合适的模型**：
-   - 日常使用：`gemini-2.5-flash`（速度快）
-   - 高质量翻译：`gemini-2.5-pro`（质量高）
+1. **Choose appropriate model**:
+   - Daily use: `gemini-2.5-flash` (fast)
+   - High-quality translation: `gemini-2.5-pro` (high quality)
 
-2. **利用缓存机制**：
-   - 保留缓存文件以支持断点续传
-   - 相同内容不会重复翻译
+2. **Utilize caching mechanism**:
+   - Keep cache files to support resume capability
+   - Same content won't be translated repeatedly
 
-3. **批量处理**：
-   - 使用目录批量翻译提高效率
-   - 利用 `--quiet` 模式减少输出开销
+3. **Batch processing**:
+   - Use directory batch translation for improved efficiency
+   - Use `--quiet` mode to reduce output overhead
 
-## 许可证
+## License
 
-本项目基于MIT许可证开源。
+This project is open-sourced under the MIT License.
 
-## 贡献
+## Contributing
 
-欢迎提交Issue和Pull Request来改进这个工具。特别欢迎以下方面的贡献：
-- 新的文本提取算法优化
-- 更多语言支持
-- 性能改进建议
-- 错误处理增强
+Contributions are welcome! Feel free to submit Issues and Pull Requests to improve this tool. Particularly welcome contributions in the following areas:
+- New text extraction algorithm optimizations
+- More language support
+- Performance improvement suggestions
+- Error handling enhancements
 
 ---
 
-*本仓库文件由 [Cursor](https://cursor.sh/) AI 编程助手生成* 
+*This repository files are generated by [Cursor](https://cursor.sh/) AI assistant* 
