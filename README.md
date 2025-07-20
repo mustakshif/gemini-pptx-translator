@@ -151,7 +151,7 @@ python diagnose.py
 
 ### Chinese to English (with progress bar)
 ```bash
-python translator.py 外交思想和务实行动.pptx -l en
+python translator.py presentation.pptx -l en
 # Output: Translating to en: ████████████████████████████████████████████████████ 100.0% (45/45) Completed in 23.4s
 ```
 

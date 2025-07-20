@@ -151,7 +151,7 @@ python diagnose.py
 
 ### 中文翻译为英文（显示进度条）
 ```bash
-python translator.py 外交思想和务实行动.pptx -l en
+python translator.py presentation.pptx -l en
 # 输出: Translating to en: ████████████████████████████████████████████████████ 100.0% (45/45) Completed in 23.4s
 ```
 
